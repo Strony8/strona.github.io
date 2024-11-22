@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+body {
+  background-color: white; /* Zmieniono na białe tło */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+    .heart {
+      width: 70px; /* Zmniejszono z 100px */
+      height: 70px; /* Zmniejszono z 100px */
+      background-color: red;
+      position: relative;
+      transform: rotate(-45deg);
+      animation: beat 1s infinite;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: '';
+      width: 70px; /* Dopasowano do nowego rozmiaru */
+      height: 70px; /* Dopasowano do nowego rozmiaru */
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart:before {
+      top: -35px; /* Dostosowano do nowego rozmiaru */
+      left: 0;
+    }
+
+    .heart:after {
+      top: 0;
+      left: 35px; /* Dostosowano do nowego rozmiaru */
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1) rotate(-45deg);
+      }
+      50% {
+        transform: scale(1.2) rotate(-45deg);
+      }
+    }
+
+    .loading-container {
+      margin-top: 20px;
+      width: 50%;
+      max-width: 400px;
+      height: 20px;
+      background-color: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loading-bar {
+      width: 0;
+      height: 100%;
+      background-color: red;
+      animation: loading 8s linear forwards;
+    }
+
+    @keyframes loading {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    .loading-text {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="heart"></div>
+  <br>
+  <br>
+  <br>
+  <div class="loading-container">
+    <div class="loading-bar"></div>
+  </div>
+  <div class="loading-text">Ładowanie...</div>
+
+  <script>
+    // Przekierowanie do menu.html po 8 sekundach
+    setTimeout(() => {
+      window.location.href = 'menu.html';
+    }, 8000);
+  </script>
+</body>
+</html>

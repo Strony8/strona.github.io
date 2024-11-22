@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria Zdjęć</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .image-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .arrow svg {
+            fill: white;
+            width: 24px;
+            height: 24px;
+        }
+        .arrow.left {
+            left: 20px;
+        }
+        .arrow.right {
+            right: 20px;
+        }
+        .arrow:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+        }
+        .arrow:hover svg {
+            fill: black;
+        }
+        .arrow:active {
+            background: rgba(255, 255, 255, 0.7); /* Tymczasowy kolor przy wciśnięciu */
+            transform: scale(0.95); /* Efekt "wciśnięcia" */
+        }
+        .arrow.reset {
+            background: rgba(0, 0, 0, 0.7); /* Powrót do czarnego tła */
+            transform: scale(1); /* Powrót do pierwotnego rozmiaru */
+        }
+    </style>
+</head>
+<body>
+
+<div class="gallery-container">
+    <div class="image-wrapper" id="imageWrapper">
+        <img src="moje1.jpeg" alt="Zdjęcie 1">
+        <img src="moje2.jpeg" alt="Zdjęcie 2">
+        <img src="moje3.jpeg" alt="Zdjęcie 3">
+    <img src="moje4.jpeg" alt="Zdjęcie 4">
+    <img src="moje5.jpeg" alt="Zdjęcie 5">
+    <img src="moje6.jpeg" alt="Zdjęcie 6">
+    <img src="moje7.jpeg" alt="Zdjęcie 7">
+    </div>
+    <button class="arrow left" id="prevBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/>
+        </svg>
+    </button>
+    <button class="arrow right" id="nextBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M8.59 16.59L13.17 12l-4.58-4.59L10 6l6 6-6 6z"/>
+        </svg>
+    </button>
+</div>
+
+<script>
+    const imageWrapper = document.getElementById('imageWrapper');
+const images = document.querySelectorAll('.image-wrapper img');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentIndex = 0;
+
+// Funkcja zmiany zdjęć
+function updateGallery() {
+    const offset = -currentIndex * 100;
+    imageWrapper.style.transform = `translateX(${offset}%)`;
+    toggleButtons();
+}
+
+// Funkcja resetowania animacji strzałek
+function resetButtonState(button) {
+    button.classList.add('reset');
+    setTimeout(() => {
+        button.classList.remove('reset');
+    }, 300); // Po sekundzie resetuje animację
+}
+
+// Funkcja włączania/wyłączania przycisków
+function toggleButtons() {
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === images.length - 1;
+}
+
+// Obsługa kliknięcia przycisku "poprzedni"
+prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateGallery();
+        resetButtonState(prevBtn);
+    }
+});
+
+// Obsługa kliknięcia przycisku "następny"
+nextBtn.addEventListener('click', () => {
+    if (currentIndex < images.length - 1) {
+        currentIndex++;
+        updateGallery();
+        resetButtonState(nextBtn);
+    }
+});
+
+// Inicjalizacja stanu przycisków
+toggleButtons();
+</script>
+
+</body>
+</html>
